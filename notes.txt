@@ -1,0 +1,59 @@
+Installing dependices:
+1. express
+2. mongoose
+3. dotenv
+4. body-parser
+5. nodemon
+6. bcrypt
+7. jsonwebtoken
+8. Multer
+
+STEPS
+-----
+
+### Work-1 in QuickBite Project
+
+1. Installed key dependencies: express, mongoose, dotenv, body-parser, nodemon, bcrypt, jsonwebtoken
+2. Configured MongoDB connection in .env (DB URL + JWT secret)
+3. Created main server file (index.js) with Express running on port 4000
+4. Connected to MongoDB using mongoose
+5. Created Vendor model (username, email, password with validations)
+6. Implemented vendorRegister controller
+   * Email uniqueness check
+   * Password hashing (bcrypt, 10 salt rounds)
+   * New vendor creation and DB save
+7. Implemented vendorLogin controller
+   * Email/password validation
+   * Password comparison with bcrypt
+   * JWT token generation (1-hour expiry)
+8. Created vendor routes with /vendor/register and /vendor/login
+9. Integrated vendor routes into main server file
+10. Added error handling and validation in controllers
+11. Structured project using MVC pattern (models, controllers, routes)
+
+### Work-2 in QuickBite Project (Firm Management)
+
+1. Created `Firm` model with fields: firmName, area, category, region, offer, image, vendor (ref to Vendor)
+2. Used enums for `category` (`veg`, `non-veg`) and `region` (`south-indian`, `north-indian`, `chinese`, `bakery`)
+3. Setup `verifyToken` middleware:
+   * Extracts token from request headers
+   * Verifies JWT using secret key
+   * Finds vendor by decoded vendorId
+   * Attaches `vendorId` to request object
+4. Configured multer for image upload:
+   * Storage in `uploads/` folder
+   * Filename as timestamp + original extension
+5. Created `addFirm` controller:
+   * Gets firm details and image from request
+   * Finds vendor by `req.vendorId`
+   * Creates and saves new Firm document
+   * Pushes saved firm to vendor's `firm` array
+6. Setup firm routes (`/add-firm`) with:
+   * `verifyToken` middleware
+   * `addFirm` controller with multer for single image upload
+7. Ensured proper error handling and status responses (404 for vendor not found, 500 for server errors)
+8. Followed MVC structure: models, controllers, routes
+9. Integrated file upload, authentication, and DB relationship (Vendor ↔ Firm) smoothly
+
+
+
